@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Result Page
+{% endblock %}
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
+
+{% block body %}
+
+<div class="card rounded-0">
+    <div class="card-body p-0">
+        <h2 class="card-title text-center my-3">Reviews</h2>
+        <table class="table table-hover table-responsive table-light m-0">
+
+            <thead class="thead-inverse">
+
+                <tr>
+                    <th>Product</th>
+                    <th width="230">Name</th>
+                    <th>Rating</th>
+                    <th width="230">Comment Heading</th>
+                    <th>Comments</th>
+                    <!-- <th width="230">Comments</th> -->
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for review in reviews %}
+
+                <tr>
+                    <td>{{review['Product']}}</td>
+                    <td>{{review['Name']}}</td>
+                    <td>{{review['Rating']}}</td>
+                    <td>{{review['CommentHead']}}</td>
+                    <td>{{review['Comment']}} </td>
+                    <!-- <td>{{review['Comment']}} </td> -->
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}
