@@ -10,7 +10,6 @@ logging.basicConfig(filename="scrapper.log", level=logging.INFO)
 
 app = Flask(__name__)
 
-
 @app.route("/", methods=['GET'])
 def homepage():
     return render_template("index.html")
@@ -83,22 +82,23 @@ def index():
                     f"{searchString},{name},{rating},{commentHead},{custComment}"]
                 review_data.append(mylst)
 
+            print(reviews, review_data)
             filename = searchString + ".csv"
 
-            # method - 1 : using files.
-            with open(filename, "a") as fp:
-                fp.writelines(review_data)
+            # # method - 1 : using files.
+            # with open(filename, "a") as fp:
+            #     fp.writelines(review_data)
 
             # method - 2 : using pandas , create df and export df to csv file.
-            # df = pd.DataFrame(reviews)
-            # print(df)
-            # df.to_csv(filename, index=False)
+            df = pd.DataFrame(reviews)
+            print(df)
+            df.to_csv(f"./csv_data/{filename}", index=False)
 
-            client = pymongo.MongoClient(
-                "mongodb+srv://admin:admin@cluster0.ge05dtm.mongodb.net/?retryWrites=true&w=majority")
-            db = client["scraper_db"]
-            coll = db["scraper_coll"]
-            coll.insert_many(reviews)
+            # client = pymongo.MongoClient(
+            #     "mongodb+srv://admin:admin@cluster0.ge05dtm.mongodb.net/?retryWrites=true&w=majority")
+            # db = client["scraper_db"]
+            # coll = db["scraper_coll"]
+            # coll.insert_many(reviews)
 
             logging.info("log my final result {}".format(reviews))
 
@@ -106,7 +106,8 @@ def index():
 
         except Exception as e:
             logging.info(e)
-            return 'something is wrong'
+            return e
+            # return 'something is wrong'
     # return render_template('results.html')
 
     else:
